@@ -8,13 +8,10 @@ import {
     Nav,
     NavItem,
     NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Badge,
-    Button
+    Badge
 } from 'reactstrap';
+
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 export default class NavComponent extends Component {
 
@@ -23,7 +20,7 @@ export default class NavComponent extends Component {
         this.toggle = this.toggle.bind(this);
         this.state = {
             isOpen: false,
-            product: 0
+            productTotal: parseInt(localStorage.getItem('productTotal'))
         };
     }
 
@@ -35,23 +32,35 @@ export default class NavComponent extends Component {
 
     componentWillReceiveProps(next) {
         this.setState({
-            product: next.product
+            productTotal: next.productTotal
         });
+    }
+
+    renderBadge = () => {
+        return (
+            <Badge color="danger">{this.state.productTotal}</Badge>
+        )
     }
 
     render() {
         return (
             <div>
                 <Navbar color="faded" light expand="md">
-                    <NavbarBrand href="/">Cosmetic Shopping Cart</NavbarBrand>
+                    <Link to='/' replace>
+                        <NavbarBrand>
+                            Cosmetic Shopping Cart
+                    </NavbarBrand>
+                    </Link>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="#">
-                                    ตะกร้าไง
-                                    <Badge color="danger">{this.state.product}</Badge>
-                                </NavLink>
+                                <Link to='/cart'>
+                                    <NavLink >
+                                        ตะกร้าสินค้า
+                                        { this.state.productTotal ? this.renderBadge() : ''}
+                                    </NavLink>
+                                </Link>
                             </NavItem>
                         </Nav>
                     </Collapse>

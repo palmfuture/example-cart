@@ -29,7 +29,7 @@ export default class BlockComponent extends Component {
     }
 
     updateCart = () => {
-        this.props.updateCart(this.state.productId);
+        this.props.updateCart(this.state.productId, this.state.title);
     }
 
     render() {
