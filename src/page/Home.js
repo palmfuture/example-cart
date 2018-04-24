@@ -11,7 +11,7 @@ export default class Home extends Component {
         this.state = {
             updateCart: this.updateCart.bind(this),
             productTotal: parseInt(localStorage.getItem('productTotal')),
-            products: JSON.parse( localStorage.getItem('products'))
+            products: JSON.parse(localStorage.getItem('products'))
         }
     }
 
@@ -30,17 +30,19 @@ export default class Home extends Component {
         this.setState({ productTotal: this.state.productTotal + 1 });
         localStorage.setItem('productTotal', this.state.productTotal + 1);
         // add product to cart
-        if (!this.state.products.length) {
+        if (!this.state.products) {
             let product = {
                 id,
                 name: title,
                 amount: 1,
                 price: 50
             }
-            localStorage.setItem('products', JSON.stringify([...this.state.products, product]));
-            this.setState({ products: [...this.state.products, product] });
+            let products = [];
+            products.push(product);
+            localStorage.setItem('products', JSON.stringify(products));
+            this.setState({ products });
+            return;
         }
-
         let index = this.state.products.filter(product => {
             return (product.id === id)
         });

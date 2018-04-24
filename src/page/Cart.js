@@ -8,7 +8,7 @@ export default class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: JSON.parse(localStorage.getItem('products'))
+            products: localStorage.getItem('products') ? JSON.parse(localStorage.getItem('products')) : []
         }
     }
 
